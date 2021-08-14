@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  web:
+    network_mode: bridge
+    links:
+      - database
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/usr/src/app
+    restart: always
+    command: "flask run --host=0.0.0.0 --port=8000"
+    ports:
+      - "23006:8000"
+    env_file:
+      - '.env'
+  database:
+    image: mysql:5.7
+    ports:
+    - "3307:3306"
+    network_mode: bridge
+    restart: unless-stopped
+    volumes:
+      - ./mysql-data/:/docker-entrypoint-initdb.d/:ro
+    env_file:
+      - '.env'
+
