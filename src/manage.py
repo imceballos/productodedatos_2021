@@ -1,8 +1,10 @@
 import os
-
+from pathlib import Path
 import click
 from flask_migrate import Migrate
 from main import create_app, db
+
+source = Path(__file__).parent
 
 
 app = create_app(os.getenv("APP_SETTINGS"))
@@ -11,8 +13,9 @@ migrate = Migrate(app, db)
 @app.after_request
 def after_request(response):
     try:
-        name_file = response.response.file.name[13:]
-        os.remove(name_file)
+        for file in os.listdir(source):
+            if file.endswith(('.jpg','.jpeg','.png')) :
+                os.remove(file) 
     except:
         pass
     return response

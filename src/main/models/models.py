@@ -2,7 +2,6 @@ import datetime
 
 from flask import current_app
 from main import db
-from main.util.common_utils import paranoid
 from marshmallow_sqlalchemy import ModelSchema
 from sqlalchemy.dialects.mysql import LONGTEXT
 from sqlalchemy import (

@@ -18,30 +18,23 @@ image_1_reqparser.add_argument(
 )
 
 
-black_2_reqparser = RequestParser(bundle_errors=True)
-black_2_reqparser.add_argument(
+image_2_reqparser = RequestParser(bundle_errors=True)
+image_2_reqparser.add_argument(
+    name="confidence", type=float, location="form", required=True, nullable=False
+)
+image_2_reqparser.add_argument(
     name='file', type=werkzeug.datastructures.FileStorage, location='files', required=True, nullable=False
 )
-black_2_reqparser.add_argument(
-    name="site_id", type=int, location="form", required=True, nullable=False
-)
 
-black_3_reqparser = RequestParser(bundle_errors=True)
-black_3_reqparser.add_argument(
-    name="site_id", type=int, location="form", required=True, nullable=False
-)
-black_3_reqparser.add_argument(
-    name="site_id", type=int, location="form", required=True, nullable=False
-)
-black_3_reqparser.add_argument(
-    name="ip_address", type=ip, location="form", required=True, nullable=False
+image_2_reqparser.add_argument(
+    name="element", type=str, location="form", required=False, default="all", nullable=False,
 )
 
 
-black_4_reqparser = RequestParser(bundle_errors=True)
-black_4_reqparser.add_argument(
-    name="site_id", type=int, location="form", required=True, nullable=False
+image_3_reqparser = RequestParser(bundle_errors=True)
+image_3_reqparser.add_argument(
+    name="confidence", type=float, location="form", required=True, nullable=False
 )
-black_4_reqparser.add_argument(
-    name="ip_address", type=ip, location="form", required=True, nullable=False
+image_3_reqparser.add_argument(
+    name='file', type=werkzeug.datastructures.FileStorage, location='files', required=True, nullable=False
 )

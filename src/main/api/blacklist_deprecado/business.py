@@ -1,7 +1,7 @@
 """Business logic for /auth API endpoints."""
 
 from datetime import datetime, timedelta
-
+from collections import Counter
 from flask import current_app, jsonify, send_file
 from main import db
 from main.models.models import EntryImages, ClassificationResult
@@ -12,28 +12,31 @@ import numpy as np
 import base64
 import os
 
-
-def process_image(image_array, confidence):
-
-    new_image = EntryImages(image_array=image_array, confidence=confidence)
-    db.session.add(new_image)
-    db.session.commit()
+def get_classification(image_array, confidence, filename):
+    new_image = EntryImages(image_array=image_array, confidence=confidence).save()
     id_mother_image = new_image.id
-    with open('hello_level.jpg', 'wb') as decodeit:
+    with open(filename, 'wb') as decodeit:
         converted_image = base64.b64decode(image_array)
         decodeit.write(converted_image)
-        img = cv2.imread('hello_level.jpg')
+        img = cv2.imread(filename)
         bbox, label, conf = cv.detect_common_objects(img, confidence=confidence, model="yolov3-tiny")
-        for b,l,c in zip(bbox, label, conf):
-            new_clasification = ClassificationResult(id_mother_image = id_mother_image,box = str(b), confidence = c)
-            db.session.add(new_clasification)
-            db.session.commit()
+        return bbox, label, conf, img
 
 
+def process_image(image_array, confidence, filename):
+    bbox, label, conf, img = get_classification(image_array, confidence, filename)
     output_image = draw_bbox(img, bbox, label, conf)
-    cv2.imwrite("main/fermadad.jpg", output_image)
+    cv2.imwrite(f"main/{filename}", output_image)
+    return send_file(filename)
 
-    return send_file("fermadad.jpg")
+
+def get_objects_classified(image_array, confidence, filename, element_required):
+    bbox, label, conf, _ = get_classification(image_array, confidence, filename)
+    if element_required != "all":
+        counter = {element_required: label.count(element_required)}
+        return counter
+    return Counter(label)
+
 
   
 def get_entry_by_id(id):
