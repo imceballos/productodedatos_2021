@@ -6,14 +6,14 @@ from flask_restx import Namespace, Resource
 from flask import after_this_request, jsonify
 
 
-from main.api.blacklist_deprecado.dto import (
+from main.api.clasifier_pd.dto import (
     image_0_reqparser,
     image_1_reqparser,
     image_2_reqparser,
     image_3_reqparser
 
 )
-from main.api.blacklist_deprecado.business import (
+from main.api.clasifier_pd.business import (
     get_entry_by_id,
     get_by_confidence,
     process_image,

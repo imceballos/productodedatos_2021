@@ -76,7 +76,7 @@ def create_app(app_settings):
     bcrypt.init_app(app)
 
     # Redis Cache
-    cache.init_app(app, config=app.config.get("REDIS_CONFIG"))
+    #cache.init_app(app, config=app.config.get("REDIS_CONFIG"))
 
     # Blueprints setup
     register_blueprints(app)

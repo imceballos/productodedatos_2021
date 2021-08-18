@@ -3,7 +3,7 @@ from http import HTTPStatus
 from flask import Blueprint, current_app
 from flask_restx import Api
 
-from main.api.blacklist_deprecado.endpoints import imagentry_ns
+from main.api.clasifier_pd.endpoints import imagentry_ns
 
 from main.exceptions import (
     NotFound,
