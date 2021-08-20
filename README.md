@@ -60,3 +60,14 @@ Vale la pena destacar que más allá de un contador de personas, debemos enfocar
 El valor de esta aplicación busca por un lado controlar de mejor manera la entrada y salida de personas en un lugar, de ahi en base a información histórica es posible generar estimadores que permitan conocer el tiempo estimado de entrada a un recinto (semejante al tiempo de espera en el Metro de Santiago) lo que reduciría la incertidumbre del usuario o cliente del recinto. Por otro lado, busca evitar sumarios sanitarios o infracciones por parte del Ministerio de Salud, que pueden llegar hasta los 50 millones de pesos.
 
 
+## Pregunta 3.2
+
+En un caso hipotético de implementación de este módelo de ML, podremos vernos enfrentados a las siguientes dificultades:
+
+- Calidad de datos: Se puede dar el caso que la calidad de las cámaras no sea la adecuada, esto puede generar fallas en la identificación de personas en imagenes "pixeladas" donde el bajo contraste de colores dificultaria la identificación de un rostro. Una solución viable estaria vinculada al módelo de negocios, donde se deberia licitar el servicio de reconocimiento de personas junto con las cámaras.
+
+- Decadencia del módelo: A medida que el tiempo pase, la efectividad del módelo irá en bajada como consecuencia de los datos de la vida real, ante estos casos, una solución factible es el re-entramiento del módelo a medida que pasa el tiempo, en este ejemplo, se podrian ajustar funciones tales que identifiquen cuando el indice de valores ingresados es congruente con algún módulo (el último indice es divisible por X) y en esos casos activar un reentrenamiento del módelo.
+
+- Localidad: La demografía es un factor importante en la identificación de personas, dado que en base a las distintas zonas de un país, puede variar el atuendo o vestimenta de las personas, de ahí que sea sumamente importante considerar el amplio ábanico de casos posibles en el proceso de entrenamiento del módelo, sumado a esto, debemos considerar las estaciones del año y el clima que varia junto con ello.
+
+- Seguridad y privacidad: Debemos considerar todos los cuidados a nivel de ingenería de software que debe tener nuestro programa en un contexto de producción, evitando usar procesos de encriptado deprecados o llaves rotativas. Sumado a esto, debemos considerar una interfaz de ususario final que se limite a la entrega de indicadores de gestión más que al acceso de información sensible, como lo puede ser el registro de imagenes de rostros. Para ello debemos entregar capacitación a cada uno de los usuarios de este contador de personas, usar doble autenticación y llevar un registro (por medio del Logging) de todas aquellas consultas que sean realizadas.
